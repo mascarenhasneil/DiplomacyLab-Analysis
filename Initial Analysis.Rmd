@@ -1,0 +1,159 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+setwd("C:\\Users\\MascarenhasNeil\\Documents\\MPS Analytics\\Sem 2\\ALY6070 - Communication and Visualization for Data Analytics SEC Spring 2021 CPS\\Diplomacy Lab's Data Sets")
+setwd("C:\\Users\\MascarenhasNeil\\Documents")
+```
+
+
+```{r}
+df=read.csv("CommiteesDataCleaned.csv")
+df2=read.csv("Committees_NonVoteV1.csv")
+CommiteesData=read.csv("CommiteesData.csv")
+
+
+```
+
+
+```{r}
+library(naniar)
+
+library(ggplot2)
+```
+
+
+```{r}
+vis_miss(df) + labs(x = "Look at all the missing ones", y = "Count", title = "For CommiteesData Dataset")
+vis_miss(df2) + labs(x = "Look at all the missing ones", y = "Count", title = "For Committees_NonVoteV1 Dataset")
+
+n_distinct(df$Agenda.short.form.title)
+```
+
+
+```{r}
+gg_miss_var(df, show_pct = TRUE) + labs(y = "Look at all the missing ones")
+gg_miss_var(df2) + labs(y = "Look at all the missing ones")
+```
+
+
+```{r}
+names(df)
+str(df,1)
+names(df2)
+
+str(CommiteesData)
+```
+
+
+```{r}
+names(CommiteesData)
+
+
+CommiteesData[CommiteesData$ï..Keywords!="",]
+
+
+```
+
+
+```{r}
+names(CommiteesData)[1] <- c("Keywords")
+names(CommiteesData)[2] <- c("Committee.Name")
+KeyData = data.frame()
+comD =  CommiteesData[CommiteesData$Keywords!="",]
+    
+    
+
+# select(CommiteesData, c(1,8)) %>% filter(CommiteesData, ï..Keywords!="")
+
+
+#i = 2
+##nrow(comD)
+
+for (i in 1:nrow(comD))
+{
+
+Keys = strsplit(as.character(comD[i,1]), split = "; ", fixed=T)
+tempDF = data.frame()
+
+for (key in 1:length(Keys[[1]])-1)
+{
+    tempDF = rbind(comD[i,-1],tempDF)
+}
+
+tempDF = cbind(Keys,tempDF )
+
+names(tempDF) = names(CommiteesData)
+
+KeyData = rbind(KeyData, tempDF)
+## del tempDF = sample(data, size = length(Keys[[1]]), replace = T)
+
+}
+
+```
+
+
+
+```{r}
+
+```
+
+
+```{r}
+
+names(CommiteesData)[1] <- c("Keywords")
+names(KeyData) <- names(CommiteesData)
+
+
+nrow(KeyData)
+
+head(KeyData,10)
+
+write.csv(KeyData, 
+          file="CommiteesDataPreProcessed.csv", append=TRUE, eol="\n",col.names=TRUE,sep=",",dec=".",na="NA", row.names = FALSE)
+
+
+```
+
+
+```{r}
+
+
+Animals <- c("giraffes", "orangutans", "monkeys")
+SF_Zoo <- c(20, 14, 23)
+LA_Zoo <- c(12, 18, 29)
+data <- data.frame(Animals, SF_Zoo, LA_Zoo)
+
+plot_ly(data, x = ~Animals, y = ~SF_Zoo, type = 'bar', name = 'SF Zoo', text = SF_Zoo ) %>% 
+    add_trace(y = ~LA_Zoo, name = 'LA Zoo') %>% 
+    layout(yaxis = list(title = 'Count'), barmode = 'stack')
+
+
+
+
+
+
+C_data %>%       # Applying group_by & summarise
+            dplyr::filter(Keywords %in% input$selectKeys & CommiteeName %in% input$selectComm) %>%
+            group_by(CommiteeName,Keywords) %>%
+            summarise(count = count(Keywords)$freq) %>%
+            ggplot(aes(x = count, y=reorder(Keywords, +count), fill=CommiteeName)) + 
+            geom_bar(position="stack", stat="identity") +
+            scale_x_continuous(breaks=seq(0,800,100)) +
+            geom_text(aes(label = count),hjust = 1, colour = "white") +
+            xlab("Count of Issues in each Commitee") + 
+            ylab("Keywords") +
+            theme_classic() + 
+            theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"))
+
+
+```
+
+
+
