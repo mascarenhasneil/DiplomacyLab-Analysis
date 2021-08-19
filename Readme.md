@@ -16,6 +16,14 @@
 
 ## Capstone Experiential Network (XN) Project
 <!-- PROJECT LOGO -->
+
+<div style="width: auto; text-align: center;">  
+
+<a href="https://www.credly.com/badges/343830b9-a38d-4078-a38b-dbd28807ff78/linked_in" target="_blank"><img src="Images/Creed-_Diplomacy_Lab-01.png" style="max-width: 50%;  
+height: auto;"></a>
+
+</div>  
+
 <br />
 <p align="center">
 
