@@ -3,7 +3,7 @@
 *.jpg linguist-detectable=true
 *.PNG linguist-detectable=true
 *.md linguist-detectable=true
-*.twbx linguist-detectable=true
+*.twbx linguist-language=Tableau
 *.r linguist-detectable=true
 *.html linguist-detectable=true
 *.pdf linguist-detectable=true
